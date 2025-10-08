@@ -1,0 +1,47 @@
+*************App_name 
+*************Table_name
+
+Select
+*************permissions
+zero and on
+*************words is correct
+*************consol no error
+*************javascript is ok
+*************links css is ok
+*************search
+*************sorting
+*************select is ok
+    
+Create 
+*************permissions
+zero and on
+*************valdtion
+*************add is ok 
+*************consol no error
+*************javascript is ok
+links css is ok
+*************words is correct
+           
+Update
+zero and on
+*************permissions
+*************valdtion
+*************update is ok 
+*************consol no error
+*************javascript is ok
+links css is ok
+*************words is correct
+    
+delete
+*************permissions
+*************go back links
+*************delet is ok
+
+    
+delete all
+*************permissions
+*************delet is ok
+*************go back links
+
+
+ 

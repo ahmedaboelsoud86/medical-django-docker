@@ -1,0 +1,102 @@
+{% extends 'layout.html'%}
+{% load static %}
+{% load humanize %}
+{% block title %}Patients{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/admin/pages/css/profile.css' %}"
+    rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+<div class="col-md-12">
+    <input type="button" class="form-control" id="btnPrint" value="Print" onclick="printdiv()" />
+</div>
+<br /><br />
+<div class="col-md-12" id="printarea">
+    <div class="portlet light">
+        <div class="row list-separated profile-stat">
+            <div class="col-md-6">
+                <h4 class="profile-desc-title">Name : {{ patient.title }}</h4>
+            </div>
+            <div class="col-md-6">
+                <h4 class="profile-desc-title">Date : {% now "l, F j, Y g:i A" %}</h4>
+            </div>
+        </div>
+        <h4 style="font-weight: bold; color: brown;">Appointments : </h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in appointments %}
+                <tr>
+                    <td>{{ item.appdata }}</td>
+                    <td>{{ item.profits.first.price }}</td>
+                    <!-- @php ($total += $item->profit ? $item->profit->price : 0 ) -->
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td><span style="font-weight: bold;">Total :</span></td>
+                    <td style="text-align: right;">{{ total_appointments }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <h4 style="font-weight: bold; color: brown;">
+            </h4style>Pharmacy : </h4>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tool</th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- @php($total2 = 0)
+                @foreach($patient->expenses as $item) -->
+                {% for item in pharmacies %}
+                <tr>
+                    <td> {{ item.tool.name }}</td>
+                    <td> {{ item.amount }} </td>
+                    <td>{{ item.tool.price|intcomma }}</td>
+                    <td>{% widthratio item.amount 1 item.tool.price as foo %}{{ foo|intcomma }}</td>
+                    <!-- @php ($total2 += $item->tool->price * $item->amount ) -->
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td><span style="font-weight: bold;">Total :</span></td>
+                    <td colspan="4" style="text-align: right;">{{total_pharmacies|intcomma}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row list-separated profile-stat">
+            <div class="col-md-6">
+                <h4 class="profile-desc-title" style="font-weight: bold; color: brown;">Total invoice :
+                    {{total_pharmacies|add:total_appointments|intcomma}}</h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% block js %}
+
+<script>
+    function printdiv() {
+        var divName = "printarea";
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+
+</script>
+<script>
+    var body = document.body;
+    body.classList.add("page-container-bg-solid");
+</script>
+{% endblock %}
+{% endblock %}

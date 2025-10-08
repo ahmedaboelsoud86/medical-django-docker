@@ -1,0 +1,12 @@
+dashboard
+branches
+doctors
+patients
+management
+tools
+pharmacies
+
+
+
+
+http://0.0.0.0:8000/en/users/deductions_incentives

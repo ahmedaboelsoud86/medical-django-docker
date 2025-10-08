@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+{% if pk %}
+Edit User
+{% else %}
+Add New User
+{% endif %}
+{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/css/error_style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+{% include "partials/_session.html"  %}    
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue">
+      <div class="portlet-title">
+        <div class="caption"> <i class="fa fa-gift"></i> Asign Groups And Permissions To User </div>
+        <div class="tools">
+          <a href="javascript:;" class="collapse"></a>
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <div class="form-body">
+          <div class="form-group">
+            {{ userForm.errors }}
+            <form action="" method="post" class="mt-repeater horizontal-form">
+            {% csrf_token %}
+            <input type="text" hidden value="{{pk}}" name="pk"/>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group form-group">
+
+                    <label class="control-label">Groups  
+                      {% if group_ids|length >= 1 %}
+                       <span style="color: rgb(20, 20, 20)"> <a  href="{% url 'clear_user_group' pk %}"> Claer</a></span>
+                      {%endif%}
+                     
+                    
+                    </label>
+
+                    <select class="form-control" name="groups" style="height: 300px;" multiple>
+                      {% for item in groups %}
+                          {% if item.id in group_ids%}
+                          <option value="{{item.id}}" selected>{{item.name}}</option>
+                          {%else%}
+                          <option value="{{item.id}}">{{item.name}}</option>
+                          {%endif%}
+
+                      {% endfor%}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-group">
+                    <label class="control-label">Permissions 
+                      {% if user_permissions|length >= 1 %}
+                      <span style="color: rgb(20, 20, 20)"> <a href="{% url 'clear_user_permissions' pk %}"> Clear</a></span>
+                      {%endif%}
+                    </label>
+                    <select class="form-control" name="permissions" style="height: 300px;" multiple>
+    
+                      {% for item in permissions %}
+                          {% if item.id in user_permissions %}
+                            <option value="{{item.id}}" selected>{{item.name}}</option>
+                           {%else%}
+                             <option value="{{item.id}}">{{item.name}}</option>
+                          {%endif%}  
+                      {% endfor%}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions right">
+                <button type="submit" class="btn blue" id="add_btn"><i class="fa fa-check"></i> Add</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

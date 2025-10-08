@@ -1,0 +1,22 @@
+<div id="chart"></div>
+<script>
+  var price = {{price|safe}}
+  var month = {{month|safe}}
+let options = {
+  chart: {
+    type: 'bar'
+  },
+  series: [{
+    name: 'Price',
+    data: price
+  }],
+  xaxis: {
+    categories: month
+  }
+}
+
+var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+chart.render();
+
+</script>

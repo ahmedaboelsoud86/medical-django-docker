@@ -1,0 +1,134 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+{% if pk %}
+Edit User
+{% else %}
+Add New User
+{% endif %}
+{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/css/error_style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-gift"></i> User info
+        </div>
+
+        <div class="tools">
+          <a href="javascript:;" class="collapse"></a>
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <div class="form-body">
+          <div class="form-group">
+            {{ userForm.errors }}
+            {{ salaryForm.errors }}
+            <form action="" method="post" class="mt-repeater horizontal-form" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if userForm.errors.branche %}has-error{% endif %} }}">
+                    <label class="control-label">Branch Name <span style="color: red">*</span></label>
+                    {{ userForm.branche }}
+                    {% if userForm.errors.branche %}
+                    <div role="alert">
+                      <span style="color: red;">{{ userForm.errors.branche }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if userForm.errors.username %}has-error{% endif %} }}">
+                    <label class="control-label">Name <span style="color: red">*</span></label>
+                    {{ userForm.username }}
+                    {% if userForm.errors.username %}
+                    <div role="alert">
+                      <span style="color: red;">{{ userForm.errors.username }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if userForm.errors.email %}has-error{% endif %} }}">
+                    <label class="control-label">Email <span style="color: red">*</span></label>
+                    {{ userForm.email }}
+                    {% if userForm.errors.email %}
+                    <div role="alert">
+                      <span style="color: red;">{{ userForm.errors.email }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if userForm.errors.phone %}has-error{% endif %} }}">
+                    <label class="control-label">Phone <span style="color: red">*</span></label>
+                    {{ userForm.phone }}
+                    {% if userForm.errors.phone %}
+                    <div role="alert">
+                      <span style="color: red;">{{ userForm.errors.phone }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="row" {% if pk %} hidden {% endif %}>
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if userForm.errors.password %}has-error{% endif %} }}">
+                    <label class="control-label">Password <span style="color: red">*</span></label>
+
+                    {{ userForm.password }}
+
+                    {% if userForm.errors.password %}
+                    <div role="alert">
+                      <span style="color: red;">{{ userForm.errors.password }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if userForm.errors.cpassword %}has-error{% endif %} }}">
+                    <label class="control-label">C-password <span style="color: red">*</span></label>
+                    {{ userForm.cpassword }}
+                    {% if userForm.errors.cpassword %}
+                    <div role="alert">
+                      <span style="color: red;">{{ userForm.errors.cpassword }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+
+               <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-group {% if salaryForm.errors.price %}has-error{% endif %} }}">
+                    <label class="control-label">Salary  <span style="color: red">*</span></label>
+                    {{ salaryForm.price }}
+                    {% if salaryForm.errors.price %}
+                    <div role="alert">
+                      <span style="color: red;">{{ salaryForm.errors.price }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+             
+              </div>
+              <div class="form-actions right">
+                <button type="submit" class="btn blue" id="add_btn"><i class="fa fa-check"></i> Add</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'layout.html'%}
+{% load static %}
+{% block title %}
+Message
+{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/css/error_style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+{% include "partials/_session.html" %}
+<style type="text/css">
+    .message {margin-left: 10px;margin-right: 10px;}
+    .item {
+        background-color: #f2f2f2;
+        border: solid 1px #dfdfdf;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+    }
+    .tools {float: right;}
+    .sender {color: green;}
+    .recipient{
+        background-color: rgb(9, 151, 104); 
+        color: #dfdfdf;
+        font-size: 18px;
+        margin-bottom: 5px;
+        font-weight: bold !important;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border: solid 5px #dfdfdf;
+    }
+</style>
+<div class="row">
+    <div class="message">
+    <div class="col-md-12 item recipient">
+        <span>Chat With {{ recipient|title }}</span>
+    </div>
+    </div>
+</div>
+<div class="row">
+    <div class="message">
+        {% for item in messages_query %}
+        <div class="item">
+            <div class="tools">
+                <form action="{% url 'deletemessage' item.id  %}" class="my-1 my-xl-0" method="post"
+                    style="display: inline-block;">
+                    {% csrf_token %}
+                    <button type="submit" onclick="return " class="btn default btn-xs black"><i
+                            class="fa fa-trash"></i></button>
+                </form>
+            </div>
+            <h5 class="{% if item.sender  == request.user %} sender {%endif%}"><span
+                    style="font-weight: bold;">{{item.title}}</span></h5>
+            <h5>{{item.timestamp }}</h5>
+            <p>{{item.content}} </p>
+        </div>
+        {%endfor%}
+        1
+    </div>
+    <div class="col-md-12 ">
+        <h2>Replay</h2>
+        <div class="form-body">
+            <div class="form-group">
+                <form action="" method="post" class="mt-repeater horizontal-form">
+                    {% csrf_token %}
+                    <div class="row">
+                        <input type="text" hidden value="{{recipient.id}}" name="recipient">
+                        <div class="col-md-12">
+                            <div class="form-group form-group {% if form.errors.title %}has-error{% endif %}">
+                                <label class="control-label">Title <span style="color: red">*</span> </label>
+                                {{form.title}}
+                                {% if form.errors.title %}
+                                <div role="alert">
+                                    <span style="color: red;">{{form.errors.title}}</span>
+                                </div>
+                                {% endif%}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group form-group {% if form.errors.content %}has-error{% endif %}">
+                                <label class="control-label">Message <span style="color: red">*</span> </label>
+                                {{form.content}}
+                                {% if form.errors.content %}
+                                <div role="alert">
+                                    <span style="color: red;">{{form.errors.content}}</span>
+                                </div>
+                                {% endif%}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions right">
+                        <button type="submit" class="btn blue" id="add_btn">
+                            <i class="fa fa-check"></i> Add </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- end of row -->
+{% endblock %}

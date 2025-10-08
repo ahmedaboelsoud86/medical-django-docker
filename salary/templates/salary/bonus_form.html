@@ -1,0 +1,51 @@
+{% extends 'layout.html'%}
+{% load static %}
+{% block title %}
+{% if pk%} Edit Bonus {% else %} Add New Bonus {% endif %}
+{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/css/error_style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> Bonus
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <form action="" method="post" class="mt-repeater horizontal-form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-group {% if form.errors.amount %}has-error{% endif %}">
+                                        <label class="control-label">Amount  % <span style="color: red">*</span>
+                                        </label> 
+                                        {{form.amount}} 
+                                        {% if form.errors.amount %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.amount}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button type="submit" class="btn blue" id="add_btn">
+                                    <i class="fa fa-check"></i> Add </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

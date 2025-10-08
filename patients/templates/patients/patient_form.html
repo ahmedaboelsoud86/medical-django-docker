@@ -1,0 +1,175 @@
+{% extends 'layout.html' %}
+{% load static %}
+{% block title %}
+{% if pk %}
+Edit Patient
+{% else %}
+Add New Patient
+{% endif %}
+{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/css/error_style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet box blue">
+      <div class="portlet-title">
+        <div class="caption">
+          <i class="fa fa-gift"></i> Patient info
+        </div>
+
+        <div class="tools">
+          <a href="javascript:;" class="collapse"></a>
+        </div>
+      </div>
+      <div class="portlet-body form">
+        <div class="form-body">
+          <div class="form-group">
+
+
+            {{ patientForm.errors }}
+            <form action="" method="post" class="mt-repeater horizontal-form" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if patientForm.errors.branch %}has-error{% endif %} }}">
+                    <label class="control-label">Branch Name <span style="color: red">*</span></label>
+                    {{ patientForm.branch}}
+                    {% if patientForm.errors.branch %}
+                    <div role="alert">
+                      <span style="color: red;">{{ patientForm.errors.branch }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if patientForm.errors.title %}has-error{% endif %} }}">
+                    <label class="control-label"> Patient Name <span style="color: red">*</span></label>
+                    {{ patientForm.title }}
+                    {% if userForm.errors.title %}
+                    <div role="alert">
+                      <span style="color: red;">{{ patientForm.errors.title }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if patientForm.errors.email %}has-error{% endif %} }}">
+                    <label class="control-label">Email <span style="color: red">*</span></label>
+                    {{ patientForm.email }}
+                    {% if patientForm.errors.email %}
+                    <div role="alert">
+                      <span style="color: red;">{{ patientForm.errors.email }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if patientForm.errors.mobile %}has-error{% endif %} }}">
+                    <label class="control-label">Mobile <span style="color: red">*</span></label>
+                    {{ patientForm.mobile }}
+                    {% if patientForm.errors.mobile %}
+                    <div role="alert">
+                      <span style="color: red;">{{ patientForm.errors.mobile }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if patientForm.errors.job %}has-error{% endif %} }}">
+                    <label class="control-label">Job <span style="color: red">*</span></label>
+                    {{ patientForm.job }}
+                    {% if patientForm.errors.job %}
+                    <div role="alert">
+                      <span style="color: red;">{{ patientForm.errors.job }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if patientForm.errors.adress %}has-error{% endif %} }}">
+                    <label class="control-label">Adress <span style="color: red">*</span></label>
+                    {{ patientForm.adress }}
+                    {% if patientForm.errors.adress %}
+                    <div role="alert">
+                      <span style="color: red;">{{ patientForm.errors.adress }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group form-group {% if patientForm.errors.gender %}has-error{% endif %} }}">
+                <label class="control-label">Gender <span style="color: red">*</span></label>
+
+                {{ patientForm.gender }}
+
+                {% if patientForm.errors.gender %}
+                <div role="alert">
+                  <span style="color: red;">{{ patientForm.errors.gender }}</span>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-group {% if patientForm.errors.birthday %}has-error{% endif %} }}">
+                <label class="control-label">Birthday <span style="color: red">*</span></label>
+
+                {{ patientForm.birthday }}
+
+                {% if patientForm.errors.birthday %}
+                <div role="alert">
+                  <span style="color: red;">{{ patientForm.errors.birthday }}</span>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+       
+          <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if patientForm.errors.weight %}has-error{% endif %} }}">
+                    <label class="control-label">Weight <span style="color: red">*</span></label>
+                    {{ patientForm.weight }}
+                    {% if patientForm.errors.weight %}
+                    <div role="alert">
+                      <span style="color: red;">{{ patientForm.errors.weight }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group form-group {% if patientForm.errors.height %}has-error{% endif %} }}">
+                    <label class="control-label">height <span style="color: red">*</span></label>
+                    {{ patientForm.height }}
+                    {% if patientForm.errors.height %}
+                    <div role="alert">
+                      <span style="color: red;">{{ patientForm.errors.height }}</span>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+
+          <div class="form-actions right">
+            <button type="submit" class="btn blue" id="add_btn"><i class="fa fa-check"></i> Add</button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

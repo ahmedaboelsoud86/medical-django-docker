@@ -1,0 +1,173 @@
+{% extends 'layout.html'%}
+{% load i18n %}
+{% load static %}
+{% block title %}
+{% if pk%} Edit Branch {% else %} Add New Branch {% endif %}
+{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/css/error_style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+<div class="row">
+    {{ form.errors}}
+    <div class="col-md-12">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                    <li><a href="{% url 'create_post' %}">Add New Post</a></li>
+                    <li class="dropdown">
+
+
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as AVAILABLE_LANGUAGES %}
+                        {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Change language
+                            <span class="caret"></span></a>
+
+
+                        <ul class="dropdown-menu">
+                            {% for language in languages %}
+                            <li>
+                                <a class="dropdown-item {% if language.code == CURRENT_LANGUAGE %}active{% endif %}"
+                                    href="{% if language.code == 'en' %}/{% else %}/{{ language.code }}/{% endif %}">{{
+                                    language.name_local }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+
+
+
+
+
+
+
+
+                    <li class="dropdown">
+
+
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as AVAILABLE_LANGUAGES %}
+                        {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Change language
+                            <span class="caret"></span></a>
+
+
+                        <ul class="dropdown-menu">
+                            {% for language in languages %}
+                            <li>
+                                <a href="/{{ language.code }}/{{request.get_full_path|slice:' 4:'}}">
+                                    {{ language.name_local }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> Posts
+                </div>
+
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <form action="" method="post" class="mt-repeater horizontal-form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div
+                                        class="form-group form-group {% if form.errors.category %}has-error{% endif %} }}">
+                                        {{form.category}}
+                                        {% if form.errors.category %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.category}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div
+                                        class="form-group form-group {% if form.errors.title %}has-error{% endif %} }}">
+                                        <label class="control-label">Title <span style="color: red">*</span>
+                                        </label>
+                                        {{form.title}}
+                                        {% if form.errors.title %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.title}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-6">
+                                    <div class="form-group form-group {% if form.errors.title_ar %}has-error{% endif %} }}">
+                                        <label class="control-label"> Title ar <span style="color: red">*</span>
+                                        </label>
+                                        {{form.title_ar}}
+                                        {% if form.errors.title_ar %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.title_ar}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div> -->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div
+                                        class="form-group form-group {% if form.errors.content %}has-error{% endif %} }}">
+                                        <label class="control-label">Content <span style="color: red">*</span>
+                                        </label>
+                                        {{form.content}}
+                                        {% if form.errors.content %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.content}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-12">
+                                    <div class="form-group form-group {% if form.errors.content_ar %}has-error{% endif %} }}">
+                                        <label class="control-label"> Content ar<span style="color: red">*</span>
+                                        </label>
+                                        {{form.content_ar}}
+                                        {% if form.errors.content_ar %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.content_ar}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div> -->
+                            </div>
+
+                            <div class="form-actions right">
+                                <button type="submit" class="btn blue" id="add_btn">
+                                    <i class="fa fa-check"></i> Add </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

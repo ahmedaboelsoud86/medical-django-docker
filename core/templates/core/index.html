@@ -1,0 +1,110 @@
+{% extends 'layout.html'%}
+{% load i18n %}
+{% load static %}
+{% block css %}
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}" {% endif %}>
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'index' %}">{% trans 'home' %}</a></li>
+                    <li><a href="{% url 'create_post' %}">Add New Post</a></li>
+                    <li class="dropdown">
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as AVAILABLE_LANGUAGES %}
+                        {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Change language
+                            <span class="caret"></span></a>
+
+
+                        <ul class="dropdown-menu">
+                           {% for language in languages %}
+                                <li>
+                                    <a class="dropdown-item {% if language.code == CURRENT_LANGUAGE %}active{% endif %}" href="{% if language.code == 'en' %}/{% else %}/{{ language.code }}/{% endif %}">{{ language.name_local }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+
+                     <li class="dropdown">
+
+
+                        {% get_current_language as CURRENT_LANGUAGE %}
+                        {% get_available_languages as AVAILABLE_LANGUAGES %}
+                        {% get_language_info_list for AVAILABLE_LANGUAGES as languages %}
+
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Change language
+                            <span class="caret"></span></a>
+
+
+                        <ul class="dropdown-menu">
+                            {% for language in languages %}
+                            <li>
+                                <a href="/{{ language.code }}/{{request.get_full_path|slice:' 4:'}}">
+                                    {{ language.name_local }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Content</th>
+                    <th>Category</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.content }}</td>
+                    <td>{{ post.category}}</td>
+                    <td>{{ post.created|timesince }} ago </td>
+                    <td class="center">
+                        <form action="{% url 'delete_post' post.id %}" style="display:inline;" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" title="delete" class="btn default btn-xs black show-alert-delete-box">
+                                <i class="fa fa-trash-o"></i>
+                            </button>
+                        </form>
+                        <a href="{% url 'update_post' post.id %}" title="update" class="btn default btn-xs purple">
+                            <i class="fa fa-edit"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+{% endblock %}
+{% block js %}
+
+{% endblock %}

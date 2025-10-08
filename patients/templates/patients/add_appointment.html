@@ -1,0 +1,132 @@
+{% extends 'layout.html'%}
+{% load static %}
+{% block title %}Appointment Booking{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/css/error_style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+
+<div class="row">
+    <!-- {{appointmentForm.errors}} -->
+    <div class="col-md-12 ">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> Appointment Booking
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <form action="" method="post" class="mt-repeater horizontal-form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div
+                                        class="form-group form-group {% if appointmentForm.errors.doctor %}has-error{% endif %}">
+                                        <label class="control-label"> Select Doctor <span style="color: red">*</span>
+                                        </label>
+                                        {{appointmentForm.doctor}}
+                                        <!-- <option data-id="" value=""> name </option> -->
+                                        <input type="text" hidden name="patient" value="{{pk}}">
+                                        {% if appointmentForm.errors.doctor %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{appointmentForm.errors.doctor}}</span>
+                                        </div>
+                                        {% endif%}
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div
+                                        class="form-group form-group {% if appointmentForm.errors.appdata %}has-error{% endif %}">
+                                        <label class="control-label"> Date <span style="color: red">*</span></label>
+                                        {{appointmentForm.appdata}}
+                                        {% if appointmentForm.errors.appdata %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{appointmentForm.errors.appdata}}</span>
+                                        </div>
+                                        {% endif%}
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div
+                                        class="form-group form-group {% if appointmentForm.errors.price %}has-error{% endif %} ">
+                                        <label class="control-label"> Price <span style="color: red">*</span></label>
+                                        {{appointmentForm.price}}
+                                        {% if appointmentForm.errors.price %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{appointmentForm.errors.price}}</span>
+                                        </div>
+                                        {% endif%}
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <table class="table table-bordered">
+                                <thead style="background-color: #F5F5F5">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Patient Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mytable">
+                                </tbody>
+                            </table>
+                            <div class="form-actions right">
+                                <button type="submit" class="btn blue" id="add_btn">
+                                    <i class="fa fa-check"></i> booking</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% block js %}
+<script type="text/javascript">
+    //we store out timerIdhere
+    var timeOutId = 0;
+    $(".action").change(function (e) {
+        e.preventDefault();
+        var doctor = $('#doctors').val();
+        var appdata = $('#appdata').val();
+
+        $.ajax({
+            url: '/patients/appointment/data/',
+            method: "get",
+            data: {
+                doctor: doctor,
+                appdata: appdata
+            },
+            beforeSend: function () {
+                $('.action').prop('disabled', true);
+            },
+            success: function (response) {
+                var trHTML = '';
+                var inc = 1;
+                $.each(response, function (i, item) {
+                    trHTML += '<tr><td>' + inc++ +
+                        '</td><td>' + item.patient +
+                        '</td></tr>';
+                });
+                $('#mytable').html(trHTML);
+                $('.action').prop('disabled', false);
+            }
+
+        });
+    });
+
+</script>
+{% endblock %}
+{% endblock %}

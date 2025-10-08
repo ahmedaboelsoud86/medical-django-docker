@@ -1,0 +1,50 @@
+
+Create 
+***********permissions
+***********valdtion
+***********add is ok 
+***********consol no error
+***********javascript is ok
+***********links css is ok
+***********zero and on
+***********words is correct
+
+
+
+
+Select
+***********words is correct
+***********permissions
+***********consol no error
+***********javascript is ok
+***********links css is ok
+***********zero and on
+***********search
+***********sorting
+***********select is ok
+    
+
+           
+Update
+permissions
+valdtion
+update is ok 
+consol no error
+javascript is ok
+links css is ok
+zero and on
+words is correct
+    
+Delete
+permissions
+delet is ok
+go back links
+   
+  
+delete all
+permissions
+delet is ok
+go back links
+
+
+ 

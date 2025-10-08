@@ -1,0 +1,76 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-25 05:05+0000\n"
+"PO-Revision-Date: 2025-08-25 05:06+0000\n"
+"Last-Translator:   <a@hotmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.2\n"
+
+#: app/settings.py:130
+msgid "English"
+msgstr "English"
+
+#: app/settings.py:131
+msgid "Arabic"
+msgstr "Arabic"
+
+#: core/models.py:7
+msgid "name"
+msgstr "Name"
+
+#: core/models.py:16 core/models.py:21
+msgid "category"
+msgstr "Category"
+
+#: core/models.py:17
+msgid "categories"
+msgstr "Categories"
+
+#: core/models.py:23
+msgid "title"
+msgstr "title"
+
+#: core/models.py:24
+msgid "content"
+msgstr "content"
+
+#: core/models.py:33
+msgid "post"
+msgstr "Post"
+
+#: core/models.py:34
+msgid "posts"
+msgstr "Posts"
+
+#: core/templates/core/index.html:24
+msgid "home"
+msgstr "Home"
+
+#: core/templates/core/index.html:25
+msgid "about"
+msgstr "About"
+
+#: core/views.py:9
+msgid "Form submitted successfully!"
+msgstr "Form submitted successfully!"
+
+#: core/views.py:11
+msgid "Please correct the errors below."
+msgstr "Please correct the errors below."
+
+#: templates/layout.html:8
+msgid " dir"
+msgstr "ltr"

@@ -1,0 +1,35 @@
+ .errors-red{color: red;}
+ .add_btn {
+    display:inline;
+    float: right;
+    background-color: #747474;
+    color: #fff;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    border-radius: 25px !important;
+        
+}
+.add_btn:hover {
+    color: #fff;      
+}
+
+.delall {
+    background-color: #67809F; 
+}
+
+.add_b {
+    color: #000 !important;
+    margin-top: 5px;
+    display:inline;
+    float: right;
+    background-color: #ddd;
+    color: #fff;
+    padding: 5px 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+    border-radius: 5px !important;
+        
+}

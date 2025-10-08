@@ -1,0 +1,20 @@
+<div id="chart"></div>
+<script>
+let options = {
+  chart: {
+    type: 'bar'
+  },
+  series: [{
+    name: 'Price',
+    data: @json($profits->pluck('price')->toArray())
+  }],
+  xaxis: {
+    categories: @json($profits->pluck('month')->toArray())
+  }
+}
+
+var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+chart.render();
+
+</script>

@@ -1,0 +1,92 @@
+{% extends 'layout.html'%}
+{% load static %}
+{% block title %}
+{% if pk%} Edit   Deductions Incentives {% else %}  Add Deductions Incentives {% endif %}
+{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/css/error_style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-12 ">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> Add Deductions Incentives
+                </div>
+
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <form action="" method="post" class="mt-repeater horizontal-form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group {% if form.errors.reason %}has-error{% endif %}">
+                                        <label class="control-label">Reason <span style="color: red">*</span> </label>
+                                        {{form.reason}}
+                                        {% if form.errors.reason %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.reason}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-group {% if form.errors.amount %}has-error{% endif %}">
+                                        <label class="control-label">Days <span style="color: red">*</span> </label>
+                                        {{form.amount}}
+                                        {% if form.errors.amount %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.amount}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group form-group {% if form.errors.user %}has-error{% endif %}">
+                                        <label class="control-label">Employees <span style="color: red">*</span>
+                                        </label>
+                                        {{form.user}}
+                                        {% if form.errors.user %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.user}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group form-group {% if form.errors.status %}has-error{% endif %}">
+                                        <label class="control-label"> Status </label>
+                                        <div class="checkbox-list" data-error-container="#form_2_services_error">
+                                            <label>
+                                                <input type="radio" value="0" name="status" /> Deductions </label>
+                                            <label>
+                                                <input type="radio" value="1" name="status" /> Incentives </label>
+                                        </div>
+                                        {% if form.errors.status %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.status}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button type="submit" class="btn blue" id="add_btn">
+                                    <i class="fa fa-check"></i> Add </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

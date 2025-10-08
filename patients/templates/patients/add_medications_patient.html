@@ -1,0 +1,90 @@
+{% extends 'layout.html'%}
+{% load static %}
+{% block title %}Appointment Booking{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/css/error_style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+
+<div class="row">
+    <!-- {{expenseForm.errors}} -->
+    <div class="col-md-12 ">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> Appointment Booking
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <form action="" method="post" class="mt-repeater horizontal-form">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div
+                                        class="form-group form-group {% if expenseForm.errors.patient %}has-error{% endif %}">
+                                        <label class="control-label"> Select Patient <span style="color: red">*</span>
+                                        </label>
+                                        {{expenseForm.patient}}
+                                        <!-- <option data-id="" value=""> name </option> -->
+                                        {% if expenseForm.errors.patient %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{expenseForm.errors.patient}}</span>
+                                        </div>
+                                        {% endif%}
+
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="col-md-12">
+                                    <div
+                                        class="form-group form-group {% if expenseForm.errors.tool %}has-error{% endif %}">
+                                        <label class="control-label"> Tool <span style="color: red">*</span></label>
+                                        {{expenseForm.tool}}
+                                        {% if expenseForm.errors.tool %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{expenseForm.errors.tool}}</span>
+                                        </div>tool
+                                        {% endif%}
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div
+                                        class="form-group form-group {% if expenseForm.errors.amount %}has-error{% endif %} ">
+                                        <label class="control-label"> Amount <span style="color: red">*</span></label>
+                                        {{expenseForm.amount}}
+                                        {% if expenseForm.errors.amount %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{expenseForm.errors.amount}}</span>
+                                        </div>
+                                        {% endif%}
+
+                                    </div>
+                                </div>
+
+                            </div>
+                          
+                            <div class="form-actions right">
+                                <button type="submit" class="btn blue" id="add_btn">
+                                    <i class="fa fa-check"></i> booking</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

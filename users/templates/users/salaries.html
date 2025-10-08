@@ -1,0 +1,81 @@
+{% extends 'layout.html' %}
+{% block title %}
+{% load humanize %}
+Monthly Salary
+{% endblock %}
+{% block body %}
+{% include "partials/_session.html" %}
+<style type="text/css">
+    .salarie {
+        padding-left: 40px;
+        padding-right: 40px;
+        background-color: #f7f7f7;
+        border: solid 1px #dedede;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .st_bold {
+        font-weight: bolder;
+        color: rgb(166, 21, 21);
+    }
+</style>
+<div class="row salarie">
+    <div>
+        <h4><span class="st_bold">Employee : </span>{{ user }} </h4>
+        <h4><span class="st_bold">Current Salary : </span>{{ monthlysalary|floatformat:"2g" }} </h4>
+        <h4><span class="st_bold">Net Salary : </span>{{ net_salary|floatformat:"2g" }}</h4>
+    </div>
+    <hr>
+    <h4><span class="st_bold">Increase The Salary : </span></h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th width="50%">Reason </th>
+                <th width="25%">Amount</th>
+                <th width="25%">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- @foreach($user->salary_attributes_increase as $s) -->
+            {% for item in increase %}
+            <tr>
+                <td>{{item.reason}}</td>
+                <td>{{item.amount}}</td>
+                <td>{{item.created_at | date:"m/d/Y" }}</td>
+            </tr>
+            {% endfor %}
+            <!-- @endforeach -->
+            <tr>
+                <th>Total</th>
+                <th colspan="2" style="text-align: center;">{{increase_sum.amount}}</th>
+            </tr>
+        </tbody>
+    </table>
+    <hr />
+    <h4><span class="st_bold">Deduction The Salary : </span></h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th width="50%">Reason</th>
+                <th width="25%">Amount</th>
+                <th width="25%">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in deduction %}
+            <tr>
+                <td>{{item.reason}}</td>
+                <td>{{item.amount}}</td>
+                <td>{{item.created_at | date:"m/d/Y" }}</td>
+            </tr>
+            {% endfor %}
+            <!-- @endforeach -->
+            <tr>
+                <th>Total</th>
+                <th colspan="2" style="text-align: center;">{{ deduction_sum.amount}}</th>
+            </tr>
+        </tbody>
+    </table>
+</div><!-- end of row -->
+{% endblock %}

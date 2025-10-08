@@ -1,0 +1,14 @@
+div.ui-menu li {
+    list-style:none;
+}
+ul
+{
+    list-style-type:none;
+    padding:0px;
+    margin-top: 3px;
+}
+li
+{
+    display:inline;
+    padding-left:0px;
+}

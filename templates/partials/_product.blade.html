@@ -1,0 +1,93 @@
+@if($products->count() >= 1 )
+@foreach($products as $item)
+<div class="col-md-3 product-men yes-marg product_data" style="float: right;">
+    <div class="men-pro-item simpleCart_shelfItem">
+        <a href="{{ route('details',$item->slug ) }}">
+        <div class="men-thumb-item " >
+            <input type="hidden" class="product_id" value="{{$item->id}}"> <!-- Your Product ID -->
+                @if(isset($item->images[0])  && isset($item->images[1]))
+                <img src="{{ asset('assets/posts/'.$item->images[0]->name) }}" alt="" class="pro-image-front">
+                <img src="{{ asset('assets/posts/'.$item->images[1]->name) }}" alt="" class="pro-image-back">
+                @else
+                <img src="{{ asset('assets/posts/noimage.png') }}" alt="" class="pro-image-front">
+                <img src="{{ asset('assets/posts/noimage.png') }}" alt="" class="pro-image-back">
+                @endif
+            
+                {{-- <div class="men-cart-pro">
+                    <div class="inner-men-cart-pro">
+                        <a href="single.html" class="link-product-add-cart">Quick View</a>
+                    </div>
+                </div> --}}
+                {{-- <span class="product-new-top">50% Off</span> --}}  
+        </div>
+        </a>
+        <div class="item-info-product ">
+            
+            <h4 style="height: 50px"><a href="{{ route('details',$item->slug ) }}">{{Str::limit($item->title, 70)}}</a></h4>
+            <div class="info-product-price">
+                <span class="item_price">{{ number_format($item->price,2) }}</span>
+            </div>
+            <button   style="padding:10px; font-family: tahoma; border: none; color:blanchedalmond"  class="addtocart item_add single-item hvr-outline-out button2">اضافة الى السله</button>
+        </div>
+    </div>
+</div>
+@endforeach
+@else
+<h1 style="text-align: center; color: red;">لا يوجد منتجات</h1>
+@endif
+<div class="clearfix"></div>
+
+{!! $products->links() !!}
+
+<script>
+$(document).ready(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('.addtocart').click( function() {
+        // var quantity = $(this).closest('.product_data').find('.qty-input').val();
+        var product_id = $(this).closest('.product_data').find('.product_id').val();
+        var el = $(this);
+        var url = "/addtocart";
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: { product_id: product_id },
+            beforeSend: function() {
+                el.prop( "disabled", true );
+                el.css('background-color', '#F06666');
+            },
+            success: function (data) {
+                new Noty({
+                    type: 'success',
+                    layout: 'topCenter',
+                    text: "تم اضافة المنتج الى سلة المشتريات ",
+                    timeout: 2000,
+                    killer: true
+                }).show();
+                $('.simpleCart_empty').text(data);
+                el.prop( "disabled", false );
+                el.css('background-color', '#EF0000');
+            },
+            error: function (data) {
+                console.log('Error:', data);
+            }
+            });
+        });
+    });
+
+</script>
+
+
+{{-- url: "/add-to-cart",
+                method: "POST",
+                data: {
+                    'quantity': quantity,
+                    'product_id': product_id,
+                },
+                success: function (response) {
+                    alertify.set('notifier','position','top-right');
+                    alertify.success(response.status);
+                }, --}}

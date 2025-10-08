@@ -1,0 +1,19 @@
+{% if messages %}
+   {% for message in messages %}
+        <script>
+            new Noty({
+                type: 'success',
+                layout: 'topRight',
+                text: "{{ message }}",
+                timeout: 2000,
+                killer: true
+            }).show();
+        </script>
+    {% endfor %}    
+{% endif %}
+
+
+
+
+    
+

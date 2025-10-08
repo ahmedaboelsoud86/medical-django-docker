@@ -1,0 +1,84 @@
+{% extends 'layout.html'%}
+{% load static %}
+{% block title %}
+Messages
+{% endblock %}
+{% block css %}
+<link href="{% static 'admin_assets/global/plugins/select2/select2.css'  %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'admin_assets/global/css/plugins.css'  %}" rel="stylesheet" type="text/css" />
+<link href="{% static 'admin_assets/css/error_style.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block body %}
+<div class="row">
+  <!-- {{ form.errors }} -->
+    <div class="col-md-12 ">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i> Message
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <form action="" method="post" class="mt-repeater horizontal-form">
+                            {% csrf_token %}
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div
+                                        class="form-group form-group {% if form.errors.recipient %}has-error{% endif %}">
+                                        <label class="control-label">To  <span style="color: red">*</span> </label>
+                                        {{ form.recipient }}
+                                        {% if form.errors.recipient %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.recipient}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group form-group {% if form.errors.title %}has-error{% endif %}">
+                                        <label class="control-label">Title <span style="color: red">*</span> </label>
+                                        {{ form.title }}
+                                        {% if form.errors.title %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.title}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group form-group {% if form.errors.content %}has-error{% endif %}">
+                                        <label class="control-label">Message <span style="color: red">*</span> </label>
+                                        {{form.content}}
+                                        {% if form.errors.content %}
+                                        <div role="alert">
+                                            <span style="color: red;">{{form.errors.content}}</span>
+                                        </div>
+                                        {% endif%}
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                            <div class="form-actions right">
+                                <button type="submit" class="btn blue" id="add_btn">
+                                    <i class="fa fa-check"></i> Add </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block js %}
+<script type="text/javascript" src="{% static 'admin_assets/global/plugins/select2/select2.min.js'  %}"></script>
+{% endblock %}
+{% endblock %}

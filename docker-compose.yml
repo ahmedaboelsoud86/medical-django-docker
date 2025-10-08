@@ -1,0 +1,51 @@
+services:
+   
+    db:
+        image: mysql:latest
+        container_name: project_name_mariadb
+        restart: always
+        volumes:
+            - data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        ports:
+            - "3306:3306"
+        healthcheck:
+            test: ["CMD", "mysql", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}", "-e", "SELECT 1"]
+            timeout: 20s
+            retries: 10
+              
+
+    web:
+        build: .
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - .:/app
+        ports: 
+            - "8000:8000"
+        depends_on:
+            - db    
+        environment:
+            DATABASE_HOST: mysql # Connects to the 'db' service by its name
+            DATABASE_NAME: medcal # Match with db service
+            DATABASE_USER: root # Match with db service
+            DATABASE_PASSWORD: 123456789 # Match with db service
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        restart: always
+        container_name: phpmyadmin
+        depends_on: 
+            - db
+        ports: 
+            - "8083:80"
+        environment: 
+            PMA_HOST: db
+            MYSQl_ROOT_PASSWORD: your-mysql-password
+                  
+
+volumes:
+    data:
