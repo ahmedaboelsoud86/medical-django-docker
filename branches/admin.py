@@ -9,5 +9,7 @@ class BranchAdmin(admin.ModelAdmin):
 
 admin.site.register(Branch, BranchAdmin)
 
-
+# ٍSome-Customise-Admin
+admin.site.site_header = "medical-projct"
+admin.site.site_title = "medical-projct"
 

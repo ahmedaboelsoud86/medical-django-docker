@@ -8,3 +8,4 @@ djangorestframework
 django-rosetta
 django-parler>=2.3
 
+
