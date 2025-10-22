@@ -14,6 +14,7 @@ class BranchSerializer(serializers.ModelSerializer):
 class PatientSerializer(serializers.ModelSerializer):
     branch = serializers.PrimaryKeyRelatedField(queryset=Branch.objects.all())
     branch_field = serializers.SerializerMethodField()
+    #gender = serializers.get_gender_dispaly
     class Meta:
         model=Patient
         fields=['id','branch_id','branch','branch_field','title','email','mobile','job','birthday','adress','gender','height','weight']

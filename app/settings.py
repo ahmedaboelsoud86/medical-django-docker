@@ -170,6 +170,7 @@ LOCALE_PATHS = [
     os.path.join(BASE_DIR,'locale')
 ]
 
+LOGIN_URL = '/login/'  # Or whatever your login URL is
 
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR / "static")]

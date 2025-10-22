@@ -9,14 +9,34 @@ from branches.models import Branch
 from django.shortcuts import get_object_or_404
 #from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, permission_required 
+from django.views.generic import ListView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-@login_required(login_url='/login')
-@permission_required("doctors.view_doctor",login_url='/login',raise_exception=True)
-def index(request):
-    doctors = Doctor.objects.all()
-    context = {'doctors': doctors}
-    return render(request,'doctors/index.html',context)
+class DoctorListView(LoginRequiredMixin,ListView):
+    model = Doctor
+    
+    # @method_decorator(login_required)
+    # def dispatch(self,  *args, **kwargs):
+    #     return super().dispatch(*args, **kwargs)
+
+    # filter
+    # def get_queryset(self):
+    #     queryset = super(DoctorListView,self).get_queryset()
+    #     queryset = queryset.filter(user = self.request.user)
+    #     return queryset
+    #context_object_name = ''
+    #template_name=''
+    
+
+
+# @login_required(login_url='/login')
+# @permission_required("doctors.view_doctor",login_url='/login',raise_exception=True)
+# def index(request):
+#     doctors = Doctor.objects.all()
+#     context = {'doctors': doctors}
+#     return render(request,'doctors/index.html',context)
 
 
 @login_required(login_url='/login')
@@ -24,26 +44,15 @@ def index(request):
 def CreateDoctor(request):
     doctorForm = DoctorForm()
     userForm = UserForm()
-    #Doctor.objects.all().delete()
     if request.method == 'POST':
-        #photo = request.POST.get('photo')
-        #return HttpResponse(photo)
         doctorForm = DoctorForm(request.POST, request.FILES)
         userForm = UserForm(request.POST)
         if  doctorForm.is_valid() and userForm.is_valid():
-            #return HttpResponse("done")
-            doctor = doctorForm.save(commit=False)
-            selected_branche=request.POST.get('branche')
-            password = request.POST.get('password')
-            username = request.POST.get('username')
-            phone = request.POST.get('phone')
-            status = request.POST.get('status')
-            email = request.POST.get('email')
-            #return HttpResponse(selected_branches)
-            branch = Branch.objects.get(pk=selected_branche)
-            user = User.objects.create(email=email,status=status,username=username,branche=branch,phone=phone)
+            user = userForm.save(commit=False)
+            password = request.POST['password']
             user.set_password(password)
             user.save()
+            doctor = doctorForm.save(commit=False)
             doctor.user = user
             doctor.save()
             messages.success(request,'Added Successfully')

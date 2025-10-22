@@ -2,9 +2,10 @@
 {% load static %}
 {% block title %}Patients{% endblock %}
 {% block css %}
-<link href="{% static 'admin_assets/admin/pages/css/profile.css' %}" rel="stylesheet" type="text/css"/>
+<link href="{% static 'admin_assets/admin/pages/css/profile.css' %}" rel="stylesheet" type="text/css" />
 <link href="{% static 'admin_assets/global/plugins/bootstrap-file-input/css/fileinput.min.css' %}" rel="stylesheet" />
-<link href="{% static 'admin_assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css' %}" rel="stylesheet" type="text/css"/>
+<link href="{% static 'admin_assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css' %}"
+	rel="stylesheet" type="text/css" />
 {% endblock %}
 {% block body %}
 <div class="col-md-12">
@@ -46,6 +47,7 @@
 								<table class="table table-striped table-bordered table-hover" id="sample_3">
 									<thead>
 										<tr>
+											<th> # </th>
 											<th> Doctor Name </th>
 											<th> Date</th>
 											<th> Profit</th>
@@ -54,6 +56,7 @@
 									<tbody>
 										{% for appoint in appointments %}
 										<tr>
+											<td>{{ appoint.id }}</td>
 											<td> DR : {{ appoint.doctor }} </td>
 											<td> {{ appoint.appdata}} {{ appoint.id}} </td>
 											<td> {{ appoint.profits.first.price }} </td>
@@ -61,6 +64,63 @@
 										{% endfor %}
 									</tbody>
 								</table>
+
+
+
+
+
+
+
+
+
+								<!-- Start Pagination-->
+								{% if appointments.has_other_pages %}
+								<nav aria-label="appointments pagination" class="mb-4">
+									<ul class="pagination">
+										{% if appointments.has_previous %}
+										<li class="page-item">
+											<a class="page-link"
+												href="?page={{ appointments.previous_page_number }}">Previous</a>
+										</li>
+										{% else %}
+										<li class="page-item disabled">
+											<span class="page-link">Previous</span>
+										</li>
+										{% endif %}
+
+										{% for page_num in appointments.paginator.page_range %}
+										{% if appointments.number == page_num %}
+										<li class="page-item active">
+											<span class="page-link">
+												{{ page_num }}
+												<span class="sr-only">(current)</span>
+											</span>
+										</li>
+										{% else %}
+										<li class="page-item">
+											<a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+										</li>
+										{% endif %}
+										{% endfor %}
+
+										{% if appointments.has_next %}
+										<li class="page-item">
+											<a class="page-link" href="?page={{ appointments.next_page_number }}">Next</a>
+										</li>
+										{% else %}
+										<li class="page-item disabled">
+											<span class="page-link">Next</span>
+										</li>
+										{% endif %}
+									</ul>
+								</nav>
+								{% endif %}
+								<!-- End Pagination-->
+
+
+
+
+
 							</div>
 						</div>
 					</div>
@@ -134,15 +194,18 @@
 <script src="{% static 'admin_assets/global/plugins/bootstrap-file-input/js/fileinput.min.js' %}"></script>
 <script src="{% static 'admin_assets/global/plugins/bootstrap-file-input/themes/fa4/theme.min.js' %}"></script>
 <!-- End file-input -->
-<script type="text/javascript" src="{% static 'admin_assets/global/plugins/datatables/media/js/jquery.dataTables.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'admin_assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'admin_assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js' %}"></script>
+<script type="text/javascript"
+	src="{% static 'admin_assets/global/plugins/datatables/media/js/jquery.dataTables.min.js' %}"></script>
+<script type="text/javascript"
+	src="{% static 'admin_assets/global/plugins/datatables/extensions/TableTools/js/dataTables.tableTools.min.js' %}"></script>
+<script type="text/javascript"
+	src="{% static 'admin_assets/global/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js' %}"></script>
 <script type="text/javascript" src="{% static 'admin_assets/pages/scripts/table-advanced-branches.js' %}"></script>
 <script>
-jQuery(document).ready(function() {       
-    Profile.init(); // init page demo
-    //FormDropzone.init();
-});
+	jQuery(document).ready(function () {
+		Profile.init(); // init page demo
+		//FormDropzone.init();
+	});
 </script>
 <script>
 	var body = document.body;
@@ -150,7 +213,7 @@ jQuery(document).ready(function() {
 	body.classList.add("page-container-bg-solid");
 </script>
 <script>
-	
+
 	$(document).ready(function () {
 		var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
 		$('#images-post').fileinput({
@@ -164,25 +227,24 @@ jQuery(document).ready(function() {
 			overwriteInitial: false,
 			uploadUrl: "{% url 'patients:upload_rayes' patient.id %}",
 			initialPreview: [
-			{%for item in patient.rays.all %}
+				{%for item in patient.rays.all %}
 				"{{ item.photo.url  }}",
-			{%endfor%}
+			{% endfor %}
 			],
-			initialPreviewAsData: true,
-			initialPreviewFileType: 'image',
-			initialPreviewConfig: [
-			{%for item in patient.rays.all %}
-            {
-                caption:"image name",
-                width: "300px",
-                url: "{% url 'patients:delete_ray' item.id %}",
-                key: "{{ item.id }}", 
+		initialPreviewAsData: true,
+		initialPreviewFileType: 'image',
+		initialPreviewConfig: [
+		{%for item in patient.rays.all %}
+	{
+		caption: "image name",
+			width: "300px",
+				url: "{% url 'patients:delete_ray' item.id %}",
+					key: "{{ item.id }}", 
             },
-            {%endfor%}
+	{% endfor %}
 		],
 	});
 	});
 </script>
 {% endblock %}
 {% endblock %}
-

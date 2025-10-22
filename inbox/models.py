@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.db.models import Max
 from django.contrib.auth import get_user_model
+from django.utils.text import Truncator
 
 
 
@@ -38,6 +39,13 @@ class testmessage(models.Model):
 	recipient  = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="testmessage_recipient")
 	content = models.TextField()
 	timestamp = models.DateTimeField(auto_now_add=True)
+	
+	# def __str__(self):
+	# 	return self.title    
+ 
+	def __str__(self):
+		truncted_content = Truncator(self.content)
+		return truncted_content.chars(100)
 
 	# def __str__(self):
 	# 	return f'{self.sender.username} : {self.content} <br>'    

@@ -13,7 +13,9 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required, permission_required 
 
+@login_required(login_url='/login')
 def listMessages(request):
     user = request.user
     latest_messages_subquery = testmessage.objects.filter(

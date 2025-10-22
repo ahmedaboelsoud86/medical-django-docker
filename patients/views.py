@@ -20,6 +20,7 @@ from datetime import date
 from django.contrib.auth.decorators import login_required, permission_required 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
+from django.core.paginator import Paginator,PageNotAnInteger, EmptyPage
  
 
 @login_required(login_url='/login')
@@ -227,7 +228,20 @@ def deleteAppointment(request,pk):
 @login_required(login_url='/login')
 def patientProfile(request,pk):
     patient = Patient.objects.get(pk=pk)
-    appointments = patient.appointments.all()
+    queryset = patient.appointments.all()
+    
+    page = request.GET.get('page',1)
+    paginator = Paginator(queryset,5)
+    
+    try:
+        appointments = paginator.page(page)
+    except PageNotAnInteger:
+        appointments = paginator.page(1)
+    except EmptyPage:
+        appointments = paginator.page(paginator.num_pages)
+        
+        
+            
     pharmacies = patient.expenses.all()
     context = {'patient':patient,'appointments':appointments,'pharmacies':pharmacies}
     return render(request,'patients/profile.html',context)
